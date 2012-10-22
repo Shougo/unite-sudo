@@ -45,8 +45,7 @@ USAGE						*unite-sudo-usage*
 ==============================================================================
 INSTALL						*unite-sudo-install*
 
-Requirements: unite.vim and sudo commands.
-Recommended: vimfiler.
+Requirements: unite.vim and vimfiler and sudo commands.
 
 https://github.com/Shougo/unite.vim
 https://github.com/Shougo/vimfiler
