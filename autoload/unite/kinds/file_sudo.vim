@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_sudo.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Oct 2012.
+" Last Modified: 23 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -106,7 +106,6 @@ let s:kind.action_table.vimfiler__write = {
       \ 'description' : 'save file',
       \ }
 function! s:kind.action_table.vimfiler__write.func(candidate)"{{{
-  echomsg expand('<sfile>')
   let context = unite#get_context()
   let lines = split(unite#util#iconv(
         \ join(getline(context.vimfiler__line1, context.vimfiler__line2), "\n"),
@@ -121,12 +120,7 @@ function! s:kind.action_table.vimfiler__write.func(candidate)"{{{
     let filename = substitute(a:candidate.action__path, '^sudo:', '', '')
 
     let [status, output] = unite#sources#sudo#external(
-          \ printf('cp %s %s', string(tempname), string(filename)))
-    if status
-      call unite#print_error(printf('Failed file "%s" copy : %s',
-            \ filename, unite#util#get_last_errmsg()))
-      setlocal modified
-    endif
+          \ ['cp', tempname, filename])
   finally
     if filereadable(tempname)
       call delete(tempname)

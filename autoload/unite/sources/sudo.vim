@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: sudo.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Oct 2012.
+" Last Modified: 23 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -61,7 +61,7 @@ function! s:source.vimfiler_check_filetype(args, context)"{{{
   let dict = unite#sources#file#create_file_dict(path, 0)
   let dict.action__path = 'sudo:' . dict.action__path
   let dict.kind = 'file/sudo'
-  let [status, output] = unite#sources#sudo#external('cat ' . path)
+  let [status, output] = unite#sources#sudo#external(['cat', path])
   if status
     call unite#print_error(printf('Failed file "%s" cat : %s',
           \ path, unite#util#get_last_errmsg()))
@@ -96,18 +96,19 @@ function! unite#sources#sudo#delete_files(srcs)"{{{
   " Todo
 endfunction"}}}
 
-function! unite#sources#sudo#external(command)"{{{
-  let command_line = 'sudo ' . a:command
-
-  let output = unite#util#system_passwd(command_line)
+function! unite#sources#sudo#external(args)"{{{
+  let args = ['sudo'] + a:args
+  let output = vimproc#system_passwd(args)
   if g:unite_source_sudo_enable_debug
-    echomsg 'command_line = ' . command_line
+    echomsg 'command_line = ' . string(args)
     echomsg 'output = ' . output
   endif
-  let status = unite#util#get_last_status()
+
+  let status = vimproc#get_last_status()
   if status && g:unite_source_sudo_enable_debug
-    call unite#print_error(printf('Failed command_line "%s"', command_line))
-    echomsg command_line
+    call unite#print_error(printf(
+          \ 'Failed command_line "%s": %s',
+          \ join(args), vimproc#get_last_errmsg()))
   endif
 
   return [status, output]
