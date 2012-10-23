@@ -50,9 +50,6 @@ function! s:source.vimfiler_check_filetype(args, context)"{{{
 
   if isdirectory(path)
     return ['directory', 'sudo:' . path]
-  elseif !filereadable(path)
-    " Ignore.
-    return []
   endif
 
   let type = 'file'
@@ -61,13 +58,18 @@ function! s:source.vimfiler_check_filetype(args, context)"{{{
   let dict = unite#sources#file#create_file_dict(path, 0)
   let dict.action__path = 'sudo:' . dict.action__path
   let dict.kind = 'file/sudo'
-  let [status, output] = unite#sources#sudo#external(['cat', path])
-  if status
-    call unite#print_error(printf('Failed file "%s" cat : %s',
-          \ path, unite#util#get_last_errmsg()))
-  endif
+  if !filereadable(path)
+    " New file.
+    let lines = []
+  else
+    let [status, output] = unite#sources#sudo#external(['cat', path])
+    if status
+      call unite#print_error(printf('Failed file "%s" cat : %s',
+            \ path, unite#util#get_last_errmsg()))
+    endif
 
-  let lines = split(output, '\r\n\|\n')
+    let lines = split(output, '\r\n\|\n')
+  endif
 
   return [type, [lines, dict]]
 endfunction"}}}
