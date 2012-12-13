@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#directory_sudo#define()"{{{
+function! unite#kinds#directory_sudo#define() "{{{
   return s:kind
 endfunction"}}}
 
@@ -38,7 +38,7 @@ let s:kind = {
       \ 'parents': ['file/sudo'],
       \}
 
-" Actions"{{{
+" Actions "{{{
 "}}}
 
 let &cpo = s:save_cpo

@@ -27,10 +27,10 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Global options definition."{{{
+" Global options definition. "{{{
 "}}}
 
-function! unite#kinds#file_sudo#define()"{{{
+function! unite#kinds#file_sudo#define() "{{{
   return s:kind
 endfunction"}}}
 
@@ -43,12 +43,12 @@ let s:kind = {
       \ 'parents' : ['openable', 'uri'],
       \}
 
-" Actions"{{{
+" Actions "{{{
 let s:kind.action_table.open = {
       \ 'description' : 'open files',
       \ 'is_selectable' : 1,
       \ }
-function! s:kind.action_table.open.func(candidates)"{{{
+function! s:kind.action_table.open.func(candidates) "{{{
   if !get(g:, 'vimfiler_as_default_explorer', 0)
     call unite#print_error('vimfiler is not default explorer.')
     call unite#print_error('Please set g:vimfiler_as_default_explorer is 1.')
@@ -67,7 +67,7 @@ endfunction"}}}
 let s:kind.action_table.cd = {
       \ 'description' : 'change vimfiler current directory',
       \ }
-function! s:kind.action_table.cd.func(candidate)"{{{
+function! s:kind.action_table.cd.func(candidate) "{{{
   if &filetype ==# 'vimfiler'
     call vimfiler#mappings#cd(a:candidate.action__directory)
     call s:move_vimfiler_cursor(a:candidate)
@@ -77,7 +77,7 @@ endfunction"}}}
 let s:kind.action_table.lcd = {
       \ 'description' : 'change vimfiler current directory',
       \ }
-function! s:kind.action_table.lcd.func(candidate)"{{{
+function! s:kind.action_table.lcd.func(candidate) "{{{
   if &filetype ==# 'vimfiler'
     call vimfiler#mappings#cd(a:candidate.action__directory)
     call s:move_vimfiler_cursor(a:candidate)
@@ -88,7 +88,7 @@ let s:kind.action_table.narrow = {
       \ 'description' : 'narrowing candidates by directory name',
       \ 'is_quit' : 0,
       \ }
-function! s:kind.action_table.narrow.func(candidate)"{{{
+function! s:kind.action_table.narrow.func(candidate) "{{{
   if a:candidate.word =~ '^\.\.\?/'
     let word = a:candidate.word
   else
@@ -105,7 +105,7 @@ endfunction"}}}
 let s:kind.action_table.vimfiler__write = {
       \ 'description' : 'save file',
       \ }
-function! s:kind.action_table.vimfiler__write.func(candidate)"{{{
+function! s:kind.action_table.vimfiler__write.func(candidate) "{{{
   let context = unite#get_context()
   let lines = split(unite#util#iconv(
         \ join(getline(context.vimfiler__line1, context.vimfiler__line2), "\n"),
@@ -130,7 +130,7 @@ endfunction"}}}
 
 "}}}
 
-function! s:move_vimfiler_cursor(candidate)"{{{
+function! s:move_vimfiler_cursor(candidate) "{{{
   if &filetype !=# 'vimfiler'
     return
   endif

@@ -32,7 +32,7 @@ call unite#util#set_default(
       \ 'g:unite_source_sudo_enable_debug', 0)
 "}}}
 
-function! unite#sources#sudo#define()"{{{
+function! unite#sources#sudo#define() "{{{
   return unite#util#has_vimproc() ? s:source : {}
 endfunction"}}}
 
@@ -41,11 +41,11 @@ let s:source = {
       \ 'description' : 'candidates from sudo',
       \}
 
-function! s:source.change_candidates(args, context)"{{{
+function! s:source.change_candidates(args, context) "{{{
   " Todo
   return []
 endfunction"}}}
-function! s:source.vimfiler_check_filetype(args, context)"{{{
+function! s:source.vimfiler_check_filetype(args, context) "{{{
   let path = s:parse_path(a:args)
 
   if isdirectory(path)
@@ -73,32 +73,32 @@ function! s:source.vimfiler_check_filetype(args, context)"{{{
 
   return [type, [lines, dict]]
 endfunction"}}}
-function! s:source.vimfiler_gather_candidates(args, context)"{{{
+function! s:source.vimfiler_gather_candidates(args, context) "{{{
   " Todo
   return []
 endfunction"}}}
-function! s:source.vimfiler_dummy_candidates(args, context)"{{{
+function! s:source.vimfiler_dummy_candidates(args, context) "{{{
 endfunction"}}}
-function! s:source.vimfiler_complete(args, context, arglead, cmdline, cursorpos)"{{{
+function! s:source.vimfiler_complete(args, context, arglead, cmdline, cursorpos) "{{{
   return unite#sources#file#complete_file(
         \ a:args, a:context, a:arglead, a:cmdline, a:cursorpos)
 endfunction"}}}
-function! s:source.complete(args, context, arglead, cmdline, cursorpos)"{{{
+function! s:source.complete(args, context, arglead, cmdline, cursorpos) "{{{
   return unite#sources#file#complete_file(
         \ a:args, a:context, a:arglead, a:cmdline, a:cursorpos)
 endfunction"}}}
 
-function! unite#sources#sudo#copy_files(dest, srcs)"{{{
+function! unite#sources#sudo#copy_files(dest, srcs) "{{{
   " Todo
 endfunction"}}}
-function! unite#sources#sudo#move_files(dest, srcs)"{{{
+function! unite#sources#sudo#move_files(dest, srcs) "{{{
   " Todo
 endfunction"}}}
-function! unite#sources#sudo#delete_files(srcs)"{{{
+function! unite#sources#sudo#delete_files(srcs) "{{{
   " Todo
 endfunction"}}}
 
-function! unite#sources#sudo#external(args)"{{{
+function! unite#sources#sudo#external(args) "{{{
   let args = ['sudo'] + a:args
   let output = vimproc#system_passwd(args)
   if g:unite_source_sudo_enable_debug
@@ -116,7 +116,7 @@ function! unite#sources#sudo#external(args)"{{{
   return [status, output]
 endfunction"}}}
 
-function! s:parse_path(args)"{{{
+function! s:parse_path(args) "{{{
   let path = unite#util#substitute_path_separator(
         \ unite#util#expand(join(a:args, ':')))
   let path = unite#util#substitute_path_separator(
