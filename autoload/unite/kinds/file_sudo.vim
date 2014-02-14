@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: file_sudo.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Oct 2012.
+" Last Modified: 14 Feb 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -34,7 +34,7 @@ function! unite#kinds#file_sudo#define() "{{{
   return s:kind
 endfunction"}}}
 
-let s:System = vital#of('unite.vim').import('System.File')
+let s:System = vital#of('unite').import('System.File')
 
 let s:kind = {
       \ 'name' : 'file/sudo',
